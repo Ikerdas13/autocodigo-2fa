@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Política de privacidad · AutoCódigo 2FA</title>
+  <meta name="description" content="Política de privacidad de la extensión de Chrome AutoCódigo 2FA.">
+  <style>
+    :root {
+      --bg: #ffffff; --text: #1f2937; --muted: #6b7280; --line: #e5e7eb;
+      --accent: #2563eb; --card: #f8fafc; --credit: #3b82f6;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #0f1117; --text: #e8eaf0; --muted: #9aa1b2; --line: #262a36; --accent: #93c5fd; --card: #171a23; --credit: #93c5fd; }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    main { max-width: 760px; margin: 0 auto; padding: 48px 16px 64px; }
+    h1 { font-size: 2rem; line-height: 1.2; margin: 0 0 6px; }
+    h2 { font-size: 1.2rem; margin: 36px 0 8px; padding-top: 4px; }
+    p, li { color: var(--text); }
+    .meta { color: var(--muted); font-size: .95rem; margin: 0 0 28px; }
+    .summary { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 10px; padding: 16px 20px; }
+    .summary p { margin: 0; }
+    ul { padding-left: 1.3em; }
+    li { margin: 6px 0; }
+    table { width: 100%; border-collapse: collapse; font-size: .95rem; margin-top: 8px; }
+    th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+    th { color: var(--muted); font-weight: 600; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .9em; background: var(--card); border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; overflow-wrap: anywhere; }
+    .table-wrap { overflow-x: auto; }
+    footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    .credit { color: var(--credit); opacity: .8; }
+    a { color: var(--accent); }
+    @media (max-width: 600px) {
+      thead { display: none; }
+      table, tbody, tr, td { display: block; width: 100%; }
+      tr { border-bottom: 1px solid var(--line); padding: 10px 0; }
+      td { border: 0; padding: 3px 0; }
+      td:first-child { font-weight: 700; }
+      td:nth-child(2)::before { content: "Para qué: "; color: var(--muted); }
+      td:nth-child(3)::before { content: "Dónde: "; color: var(--muted); }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Política de privacidad de AutoCódigo 2FA</h1>
+  <p class="meta">Última actualización: 10 de noviembre de 2026</p>
+
+  <div class="summary">
+    <p><strong>En resumen:</strong> AutoCódigo 2FA no envía ningún dato a ningún servidor. Tu clave secreta y tus preferencias se guardan solo en tu navegador, cifradas si usas un PIN. No hay analítica, publicidad, cookies propias ni terceros.</p>
+  </div>
+
+  <h2>1. Qué es AutoCódigo 2FA</h2>
+  <p>AutoCódigo 2FA es una extensión de Chrome que genera el código de verificación en dos pasos (TOTP, el estándar que usan apps como Google Authenticator) y lo rellena en la página de verificación del inicio de sesión de la Universitat Jaume I (<code>xmlrpc.uji.es</code>).</p>
+  <p>Es una extensión <strong>no oficial</strong> y <strong>no está afiliada</strong>, patrocinada ni aprobada por la Universitat Jaume I. Su nombre y su dominio se citan solo para indicar con qué inicio de sesión es compatible. Google Authenticator es una marca de Google LLC.</p>
+
+  <h2>2. Datos que maneja la extensión</h2>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Dato</th><th>Para qué</th><th>Dónde se guarda</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Clave secreta TOTP de tu cuenta</td>
+        <td>Generar el código de 6 dígitos</td>
+        <td>En tu navegador (<code>chrome.storage.local</code>). Si estableces un PIN, cifrada con AES-256-GCM; si no, sin cifrar.</td>
+      </tr>
+      <tr>
+        <td>Clave desbloqueada (solo con PIN)</td>
+        <td>Generar códigos sin pedirte el PIN cada vez</td>
+        <td>Solo en memoria (<code>chrome.storage.session</code>). Se borra al cerrar Chrome, al bloquear la extensión, al bloquear la pantalla o tras el tiempo de inactividad que elijas.</td>
+      </tr>
+      <tr>
+        <td>Preferencias</td>
+        <td>Relleno y envío automáticos, tiempo de bloqueo</td>
+        <td>En tu navegador (<code>chrome.storage.local</code>)</td>
+      </tr>
+      <tr>
+        <td>Contador de PIN incorrectos</td>
+        <td>Imponer esperas tras varios fallos</td>
+        <td>En tu navegador (<code>chrome.storage.local</code>)</td>
+      </tr>
+      <tr>
+        <td>Contador de envíos automáticos</td>
+        <td>No reenviar en bucle un código que falla</td>
+        <td>En el almacenamiento de sesión de la pestaña de verificación. Se borra al cerrar la pestaña.</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <p><strong>Tu PIN no se guarda en ningún sitio.</strong> Solo se usa en el momento para derivar la clave de cifrado (PBKDF2-SHA256, 600.000 iteraciones).</p>
+  <p>La extensión <strong>no</strong> accede a tu usuario ni a tu contraseña, ni a tu historial, ni al contenido de otras webs.</p>
+
+  <h2>3. Qué no hace nunca</h2>
+  <ul>
+    <li>No envía datos a ningún servidor, ni del desarrollador ni de terceros. Su política de seguridad de contenido (<code>connect-src 'none'</code>) le impide hacer cualquier conexión de red.</li>
+    <li>No usa analítica, telemetría, publicidad ni cookies.</li>
+    <li>No vende, cede ni comparte datos con nadie.</li>
+    <li>No usa los datos para ningún fin distinto de rellenar el código de verificación.</li>
+    <li>No carga código remoto: todo el código está incluido en la extensión.</li>
+  </ul>
+
+  <h2>4. Dónde actúa y con qué permisos</h2>
+  <ul>
+    <li><strong>Acceso a <code>https://xmlrpc.uji.es/*</code>:</strong> solo actúa en la página de verificación en dos pasos (<code>/simplesaml/module.php/twofactorauth/TwoFactorMethods/totp.php</code>) para escribir el código. Solo envía el formulario si su destino es <code>https://xmlrpc.uji.es</code>.</li>
+    <li><strong><code>storage</code>:</strong> guardar la clave y las preferencias en tu navegador.</li>
+    <li><strong><code>scripting</code>:</strong> rellenar el código en una pestaña de verificación que ya estuviera abierta.</li>
+    <li><strong><code>idle</code>:</strong> bloquear la clave al bloquear la pantalla o tras un tiempo de inactividad.</li>
+  </ul>
+
+  <h2>5. Seguridad</h2>
+  <p>Si estableces un PIN, la clave se guarda cifrada (AES-256-GCM con una clave derivada del PIN mediante PBKDF2-SHA256 de 600.000 iteraciones, con sal e IV aleatorios). Tras 5 intentos fallidos de PIN se imponen esperas crecientes.</p>
+  <p>Si no estableces un PIN, la clave se guarda sin cifrar en tu perfil de Chrome, y la extensión te lo indica con un aviso. Te recomendamos usar un PIN y utilizar la extensión solo en un ordenador personal.</p>
+
+  <h2>6. Cómo borrar tus datos</h2>
+  <ul>
+    <li>En la extensión, pulsa <strong>"Borrar clave de la extensión"</strong>. Esto elimina la clave secreta y el contador de intentos. Tus preferencias se conservan hasta que desinstales la extensión.</li>
+    <li>Si desinstalas la extensión, Chrome elimina automáticamente todos sus datos.</li>
+  </ul>
+  <p>Como ningún dato sale de tu dispositivo, el desarrollador no tiene ninguna copia que borrar.</p>
+
+  <h2>7. Cambios en esta política</h2>
+  <p>Si la política cambia, se publicará en esta página con una nueva fecha de actualización. Cualquier cambio que suponga enviar datos fuera de tu dispositivo se indicaría de forma destacada antes de aplicarse.</p>
+
+  <h2>8. Contacto</h2>
+  <p>Para cualquier duda sobre esta política o sobre la extensión, abre una incidencia en el repositorio del proyecto: <a href="https://github.com/Ikerdas13/autocodigo-2fa/issues">github.com/Ikerdas13/autocodigo-2fa/issues</a></p>
+
+  <footer>
+    <span>AutoCódigo 2FA · extensión no oficial, no afiliada a la Universitat Jaume I</span>
+    <span class="credit">Design by Iker G</span>
+  </footer>
+</main>
+</body>
+</html>
